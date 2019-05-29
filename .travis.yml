@@ -1,0 +1,6 @@
+os: linux
+language: groovy
+jdk: oraclejdk8
+
+script:
+  -  mvn clean install
