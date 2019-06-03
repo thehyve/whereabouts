@@ -16,6 +16,7 @@
 
 	<properties>
 		<java.version>1.8</java.version>
+		<jacoco-maven-plugin.version>0.8.2</jacoco-maven-plugin.version>
 	</properties>
 
 	<dependencies>
@@ -59,6 +60,35 @@
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
+			</plugin>
+			<plugin>
+				<groupId>org.jacoco</groupId>
+				<artifactId>jacoco-maven-plugin</artifactId>
+				<version>${jacoco-maven-plugin.version}</version>
+				<executions>
+					<execution>
+						<id>pre-unit-tests</id>
+						<goals>
+							<goal>prepare-agent</goal>
+						</goals>
+						<configuration>
+							<!-- Sets the path to the file which contains the execution data. -->
+							<destFile>${project.build.directory}/test-results/coverage/jacoco/jacoco.exec</destFile>
+						</configuration>
+					</execution>
+					<!-- Ensures that the code coverage report for unit tests is created after unit tests have been run -->
+					<execution>
+						<id>post-unit-test</id>
+						<phase>test</phase>
+						<goals>
+							<goal>report</goal>
+						</goals>
+						<configuration>
+							<dataFile>${project.build.directory}/test-results/coverage/jacoco/jacoco.exec</dataFile>
+							<outputDirectory>${project.build.directory}/test-results/coverage/jacoco</outputDirectory>
+						</configuration>
+					</execution>
+				</executions>
 			</plugin>
 		</plugins>
 	</build>
