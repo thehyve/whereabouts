@@ -1,0 +1,26 @@
+<?xml version="1.1" encoding="UTF-8"?>
+<!--
+  ~ Copyright (c) 2019  The Hyve B.V.
+  ~  This file is distributed under the MIT License
+  ~  (see accompanying file LICENSE).
+  -->
+
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.6.xsd">
+
+    <changeSet author="ewelina@thehyve.nl" id="1000000">
+
+        <createTable schemaName="public" tableName="instance"
+                     remarks="Stores record per an advanced analysis job.">
+            <column name="id" type="serial">
+                <constraints primaryKey="true" primaryKeyName="instance_pk"/>
+            </column>
+            <column name="address" remarks="Instance address." type="VARCHAR(50)"/>
+            <column name="source_query" remarks="Data selection query." type="VARCHAR(200)"/>
+        </createTable>
+
+    </changeSet>
+
+</databaseChangeLog>

@@ -1,0 +1,4 @@
+databaseChangeLog:
+  - include:
+      file: classpath:db/changelog/changes/00000000000000_public.xml
+relativeToChangelogFile: false

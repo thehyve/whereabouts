@@ -7,7 +7,27 @@ Data warehouse Inventory Management System that maintains a catalogue of data wa
 with information about how they were created (to enable restoring a similar instance) 
 and how to connect to them (required for the data loading and slicing services).
 
+
 ## Run, test, deploy
+
+### Configure PostgreSQL database
+```bash
+sudo -u postgres psql
+```
+
+```bash
+create user gb with password 'gb';
+create database gb_backend;
+grant all privileges on database gb_backend to gb;
+```
+
+Required tables will be created on application startup using Liquibase. 
+This behaviour can be disabled by this setting:
+```
+spring.liquibase.enabled=false
+```
+
+###Run
 
 Make sure you have Maven installed.
 
@@ -37,34 +57,6 @@ Run all tests. The test will use the configuration from `./src/test/resource/app
 ```bash
 mvn test
 ```
-
-## Usage
-
-
-### API calls:
-
-- GET `/instances`
-   - Gets a list of all instances.
-- GET `/instances/<id>`
-   - Gets an instance with the given `<id>`.
-- POST `/instances`
-   - Adds a new instance with the properties provided in the body.
-   Request body:
-   ```
-   {
-             "address": "string",
-             "sourceQuery": "string"
-   }
-   ```
-- PUT `/instances/<id>`
-   - Updates the instance with given `<id>` with the values in the body.
-      Request body:
-      ```
-      {
-             "address": "string",
-             "sourceQuery": "string"
-      }
-      ```
 
 License
 -------
