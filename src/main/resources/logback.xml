@@ -3,16 +3,10 @@
 <configuration scan="true">
     <include resource="org/springframework/boot/logging/logback/base.xml"/>
 
-    <appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
-        <encoder>
-            <pattern>%highlight(%-5level) %msg%n</pattern>
-            <charset>utf8</charset>
-        </encoder>
-    </appender>
-
     <logger name="org.hibernate.validator" level="WARN"/>
     <logger name="org.hibernate" level="WARN"/>
     <logger name="org.hibernate.ejb.HibernatePersistence" level="OFF"/>
+    <logger name="org.hibernate.orm.cache" level="ERROR"/>
     <logger name="liquibase" level="WARN"/>
     <logger name="liquibase.changelog.ChangeSet" level="INFO"/>
     <logger name="liquibase.integration.spring" level="ERROR"/>
