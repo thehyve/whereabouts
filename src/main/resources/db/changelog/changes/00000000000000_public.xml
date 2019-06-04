@@ -14,7 +14,7 @@
 
         <createTable schemaName="public" tableName="instance"
                      remarks="Stores record per an advanced analysis job.">
-            <column name="id" type="serial">
+            <column name="id" type="serial" autoIncrement="true">
                 <constraints primaryKey="true" primaryKeyName="instance_pk"/>
             </column>
             <column name="address" remarks="Instance address." type="VARCHAR(50)"/>

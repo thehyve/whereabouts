@@ -33,8 +33,7 @@ public class InstanceRepositoryIntegrationTest {
 
         //then
         assertNotNull(foundInstance);
-        assertEquals(instance.getAddress(), foundInstance.getAddress());
-        assertEquals(instance.getSourceQuery(), foundInstance.getSourceQuery());
+        assertEquals(instance, foundInstance);
     }
 
 }

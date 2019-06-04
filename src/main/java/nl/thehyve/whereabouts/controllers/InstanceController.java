@@ -5,9 +5,8 @@
 
 package nl.thehyve.whereabouts.controllers;
 
-import nl.thehyve.whereabouts.domains.Instance;
-import nl.thehyve.whereabouts.exceptions.InstanceNotFoundException;
-import nl.thehyve.whereabouts.repositories.InstanceRepository;
+import nl.thehyve.whereabouts.dto.InstanceRepresentation;
+import nl.thehyve.whereabouts.services.InstanceService;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -20,40 +19,30 @@ import java.util.List;
 @RestController
 public class InstanceController {
 
-    private final InstanceRepository instanceRepository;
+    private final InstanceService instanceService;
 
-    InstanceController(InstanceRepository instanceRepository) {
-        this.instanceRepository = instanceRepository;
+    InstanceController(InstanceService instanceService) {
+        this.instanceService = instanceService;
     }
 
     @GetMapping("/instances")
-    List<Instance> getInstances() {
-        return instanceRepository.findAll();
+    public List<InstanceRepresentation> getInstances() {
+        return instanceService.findAll();
     }
 
     @GetMapping("/instances/{id}")
-    Instance getInstance(@PathVariable Long id) {
-        return instanceRepository.findById(id)
-                .orElseThrow(() -> new InstanceNotFoundException(id));
+    public InstanceRepresentation getInstance(@PathVariable Long id) {
+        return instanceService.findById(id);
     }
 
     @PostMapping("/instances")
-    Instance addInstance(@RequestBody Instance newInstance) {
-        return instanceRepository.save(newInstance);
+    public InstanceRepresentation addInstance(@RequestBody InstanceRepresentation newInstance) {
+        return instanceService.addInstance(newInstance);
     }
 
     @PutMapping("/instances/{id}")
-    Instance replaceInstance(@RequestBody Instance newInstance, @PathVariable Long id) {
-
-        return instanceRepository.findById(id)
-                .map(instance -> {
-                    instance.setAddress(newInstance.getAddress());
-                    instance.setSourceQuery(newInstance.getSourceQuery());
-                    return instanceRepository.save(instance);
-                })
-                .orElseGet(() -> {
-                    newInstance.setId(id);
-                    return instanceRepository.save(newInstance);
-                });
+    public InstanceRepresentation replaceInstance(@RequestBody InstanceRepresentation newInstance, @PathVariable Long id) {
+        newInstance.setId(id);
+        return instanceService.replaceInstance(newInstance);
     }
 }
