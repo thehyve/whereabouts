@@ -1,7 +1,7 @@
 # whereabouts
 
-
 [![Build Status](https://travis-ci.org/thehyve/whereabouts.svg?branch=master)](https://travis-ci.org/thehyve/whereabouts/branches)
+[![codecov](https://codecov.io/gh/thehyve/whereabouts/branch/master/graph/badge.svg)](https://codecov.io/gh/thehyve/whereabouts)
 
 Data warehouse Inventory Management System that maintains a catalogue of data warehouse instances, 
 with information about how they were created (to enable restoring a similar instance) 
@@ -52,7 +52,7 @@ java -jar target/whereabouts-<version>.jar
 
 ### Tests
 
-Run all tests. The test will use the configuration from `./src/test/resource/application.properties` file.
+Run all tests. The test will use the configuration from `./src/test/resource/application.yml` file.
 
 ```bash
 mvn test
