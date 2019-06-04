@@ -7,12 +7,14 @@ package nl.thehyve.whereabouts.controllers;
 
 import nl.thehyve.whereabouts.dto.InstanceRepresentation;
 import nl.thehyve.whereabouts.services.InstanceService;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.ResponseStatus;
 
 import java.util.List;
 
@@ -36,6 +38,7 @@ public class InstanceController {
     }
 
     @PostMapping("/instances")
+    @ResponseStatus(HttpStatus.CREATED)
     public InstanceRepresentation addInstance(@RequestBody InstanceRepresentation newInstance) {
         return instanceService.addInstance(newInstance);
     }

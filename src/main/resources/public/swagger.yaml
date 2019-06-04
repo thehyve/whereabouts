@@ -51,8 +51,8 @@ paths:
       summary: Adds a new instance with the properties provided in the body.
       operationId: addInstance
       responses:
-        '200':
-          description: OK
+        '201':
+          description: Created
           content:
             application/json:
               schema:
@@ -95,6 +95,8 @@ paths:
                 id: 1
                 address: address.example.com
                 sourceQuery: test query 1
+        '404':
+          description: Not Found
     put:
       tags:
         - Instances
@@ -109,6 +111,8 @@ paths:
       responses:
         '200':
           description: OK
+        '404':
+          description: Not Found
       requestBody:
         content:
           application/json:
