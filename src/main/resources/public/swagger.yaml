@@ -1,0 +1,143 @@
+# Copyright 2019 The Hyve B.V.
+openapi: 3.0.0
+info:
+  version: 0.0.1
+  title: whereabouts
+  contact:
+    name: The Hyve
+    email: office@thehyve.nl
+    url: https://github.com/thehyve/whereabouts
+  license:
+    name: MIT
+    url: 'https://opensource.org/licenses/MIT'
+  description: |
+    Whereabouts API documention.
+
+tags:
+  - name: Instances
+    description: Instance related operations
+
+servers:
+  - url: /
+    description: Current whereabouts server.
+
+paths:
+  /instances:
+    get:
+      tags:
+        - Instances
+      summary: Get all instances
+      operationId: getInstances
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  instances:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Instance'
+                    example:
+                      address: address.example.com
+                      sourceQuery: test query 1
+        '403':
+          description: Forbidden
+    post:
+      tags:
+        - Instances
+      summary: Adds a new instance with the properties provided in the body.
+      operationId: addInstance
+      responses:
+        '201':
+          description: Created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Instance'
+              example:
+                id: 1
+                address: address.example.com
+                sourceQuery: test query 1
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                address:
+                  type: string
+                sourceQuery:
+                  type: string
+        required: true
+  '/instances/{id}':
+    get:
+      tags:
+        - Instances
+      summary: Gets an instance with the given `<id>`.
+      operationId: getInstance
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Instance'
+              example:
+                id: 1
+                address: address.example.com
+                sourceQuery: test query 1
+        '404':
+          description: Not Found
+    put:
+      tags:
+        - Instances
+      summary: Updates the instance with given `<id>` with the values in the body.
+      operationId: replaceInstance
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: OK
+        '404':
+          description: Not Found
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                address:
+                  type: string
+                sourceQuery:
+                  type: string
+        required: true
+
+components:
+  schemas:
+    Instance:
+      type: object
+      properties:
+        id:
+          description: Unique instance Id
+          type: number
+        address:
+          description: Instance address
+          type: string
+          minLength: 1
+        sourceQuery:
+          description: Data selection query
+          type: string
+          minLength: 1
