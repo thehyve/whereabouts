@@ -16,9 +16,9 @@ sudo -u postgres psql
 ```
 
 ```bash
-create user gb with password 'gb';
-create database gb_backend;
-grant all privileges on database gb_backend to gb;
+create user wa with password 'wa';
+create database whereabouts;
+grant all privileges on database whereabouts to wa;
 ```
 
 Required tables will be created on application startup using Liquibase. 
