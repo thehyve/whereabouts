@@ -7,6 +7,8 @@ package nl.thehyve.whereabouts.controllers;
 
 import nl.thehyve.whereabouts.dto.InstanceRepresentation;
 import nl.thehyve.whereabouts.services.InstanceService;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
@@ -54,9 +56,9 @@ public class InstanceController {
      * an exception (400) is the data is not valid.
      */
     @PostMapping
-    public InstanceRepresentation addInstance(
+    public ResponseEntity<InstanceRepresentation> addInstance(
             @Valid @RequestBody InstanceRepresentation newInstance) {
-        return instanceService.addInstance(newInstance);
+        return new ResponseEntity<>(instanceService.addInstance(newInstance), HttpStatus.CREATED);
     }
 
     /**

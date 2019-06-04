@@ -51,8 +51,8 @@ paths:
       summary: Adds a new instance with the properties provided in the body.
       operationId: addInstance
       responses:
-        '200':
-          description: OK
+        '201':
+          description: Created
           content:
             application/json:
               schema:
