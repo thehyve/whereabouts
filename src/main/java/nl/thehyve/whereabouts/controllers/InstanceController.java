@@ -7,16 +7,16 @@ package nl.thehyve.whereabouts.controllers;
 
 import nl.thehyve.whereabouts.dto.InstanceRepresentation;
 import nl.thehyve.whereabouts.services.InstanceService;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @RestController
+@Validated
+@CrossOrigin
+@RequestMapping("/instances")
 public class InstanceController {
 
     private final InstanceService instanceService;
@@ -25,23 +25,52 @@ public class InstanceController {
         this.instanceService = instanceService;
     }
 
-    @GetMapping("/instances")
+    /**
+     * GET /instances : get all instances.
+     *
+     * @return the list of all instances.
+     */
+    @GetMapping
     public List<InstanceRepresentation> getInstances() {
         return instanceService.findAll();
     }
 
-    @GetMapping("/instances/{id}")
-    public InstanceRepresentation getInstance(@PathVariable Long id) {
+    /**
+     * GET /instances/{id} : gets the instance with the id.
+     *
+     * @param id the id of the instance.
+     * @return the instance with the id, if it exists; an exception (404) otherwise.
+     */
+    @GetMapping("/{id}")
+    public InstanceRepresentation getInstance(@PathVariable("id") Long id) {
         return instanceService.findById(id);
     }
 
-    @PostMapping("/instances")
-    public InstanceRepresentation addInstance(@RequestBody InstanceRepresentation newInstance) {
+    /**
+     * POST /instances : adds a new instance.
+     *
+     * @param newInstance the properties of the new instance.
+     * @return the added instance with the generated id, if the data is valid,
+     * an exception (400) is the data is not valid.
+     */
+    @PostMapping
+    public InstanceRepresentation addInstance(
+            @Valid @RequestBody InstanceRepresentation newInstance) {
         return instanceService.addInstance(newInstance);
     }
 
-    @PutMapping("/instances/{id}")
-    public InstanceRepresentation replaceInstance(@RequestBody InstanceRepresentation newInstance, @PathVariable Long id) {
+    /**
+     * PUT /instances/{id} : updates the instance with the id.
+     *
+     * @param id the id of the instance.
+     * @param newInstance the object with properties used for updating the instance.
+     * @return the updated instance, if it exists and the data is valid; an exception if the instance
+     * cannot be found (404) or the data is invalid (400).
+     */
+    @PutMapping("/{id}")
+    public InstanceRepresentation replaceInstance(
+            @PathVariable("id") Long id,
+            @Valid @RequestBody InstanceRepresentation newInstance) {
         newInstance.setId(id);
         return instanceService.replaceInstance(newInstance);
     }

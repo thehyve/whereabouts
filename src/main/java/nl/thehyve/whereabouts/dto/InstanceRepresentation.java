@@ -6,6 +6,7 @@
 package nl.thehyve.whereabouts.dto;
 
 import lombok.Data;
+import nl.thehyve.whereabouts.validation.Required;
 
 import java.io.Serializable;
 
@@ -17,8 +18,8 @@ public class InstanceRepresentation implements Serializable {
 
     private Long id;
 
-    private String address;
+    private @Required String address;
 
-    private String sourceQuery;
+    private @Required String sourceQuery;
 
 }
