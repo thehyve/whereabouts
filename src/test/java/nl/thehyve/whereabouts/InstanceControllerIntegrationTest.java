@@ -5,6 +5,7 @@
 
 package nl.thehyve.whereabouts;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import nl.thehyve.whereabouts.domains.Instance;
 import nl.thehyve.whereabouts.dto.InstanceRepresentation;
 import nl.thehyve.whereabouts.repositories.InstanceRepository;
@@ -126,6 +127,30 @@ public class InstanceControllerIntegrationTest {
         mvc.perform(get("/instances/-1")
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isNotFound());
+    }
+
+    @Test
+    public void givenInvalidInstance_whenPostInstance_thenStatus400() throws Exception {
+        ObjectMapper mapper = new ObjectMapper();
+        InstanceRepresentation invalidInstance = new InstanceRepresentation();
+        invalidInstance.setAddress("");
+        invalidInstance.setSourceQuery("test");
+        mvc.perform(post("/instances")
+                .content(mapper.writeValueAsString(invalidInstance))
+                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isBadRequest());
+    }
+
+    @Test
+    public void givenValidInstance_whenPostInstance_thenStatus400() throws Exception {
+        ObjectMapper mapper = new ObjectMapper();
+        InstanceRepresentation instance = new InstanceRepresentation();
+        instance.setAddress("address");
+        instance.setSourceQuery("test");
+        mvc.perform(post("/instances")
+                .content(mapper.writeValueAsString(instance))
+                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isCreated());
     }
 
     private Instance createTestInstance(String address, String sourceQuery) {
