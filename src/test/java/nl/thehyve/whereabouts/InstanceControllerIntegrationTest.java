@@ -70,6 +70,13 @@ public class InstanceControllerIntegrationTest {
 
     }
 
+    @Test
+    public void givenNonExistingInstance_whenGetInstanceById_thenStatus404() throws Exception {
+        mvc.perform(get("/instances/-1")
+                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isNotFound());
+    }
+
     private Instance createTestInstance(String address, String sourceQuery) {
         Instance instance = new Instance(address, sourceQuery);
         return repository.save(instance);
