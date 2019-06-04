@@ -29,3 +29,7 @@ spring:
         implicit-strategy: org.springframework.boot.orm.jpa.hibernate.SpringImplicitNamingStrategy
   liquibase:
     enabled: true
+keycloak:
+  realm: test-realm
+  resource: test-resource
+  auth-server-url: test-server-url
