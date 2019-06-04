@@ -4,18 +4,23 @@ info:
   version: 0.0.1
   title: whereabouts
   contact:
+    name: The Hyve
     email: office@thehyve.nl
-    url: 'office@thehyve.nl'
+    url: https://github.com/thehyve/whereabouts
   license:
     name: MIT
     url: 'https://opensource.org/licenses/MIT'
   description: |
     Whereabouts API documention.
+
 tags:
   - name: Instances
     description: Instance related operations
+
 servers:
-  - url: 'https://whereabouts.thehyve.net'
+  - url: /
+    description: Current whereabouts server.
+
 paths:
   /instances:
     get:
@@ -115,6 +120,7 @@ paths:
                 sourceQuery:
                   type: string
         required: true
+
 components:
   schemas:
     Instance:
