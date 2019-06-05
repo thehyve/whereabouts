@@ -27,6 +27,24 @@ This behaviour can be disabled by this setting:
 spring.liquibase.enabled=false
 ```
 
+### Configure Keycloak
+Whereabouts uses Keycloak as an identity provider.
+The following settings need to be configured before running the application.
+
+| yaml key | description |
+|-----------|-------------|
+| `keycloak.auth-server-url` | keycloak url that used. e.g. `https://keycloak.example.com/auth` |
+| `keycloak.realm` | keycloak realm. |
+| `keycloak.resource` | keycloak client id. |
+
+
+There are 3 Keycloak client roles that need to be added for users to enable the access to all endpoints:
+- READ_INSTANCES,
+- CREATE_INSTANCES,
+- CHANGE_INSTANCES;
+
+See [swagger documentation](/src/main/resources/public/swagger.yaml) for more details.
+
 ### Run
 
 Make sure you have Maven installed.

@@ -21,12 +21,16 @@ servers:
   - url: /
     description: Current whereabouts server.
 
+security:
+  - BearerAuth: []
+
 paths:
   /instances:
     get:
       tags:
         - Instances
-      summary: Get all instances
+      summary: Get all instances.
+      description: Requires 'READ_INSTANCES' user role.
       operationId: getInstances
       responses:
         '200':
@@ -43,12 +47,15 @@ paths:
                     example:
                       address: address.example.com
                       sourceQuery: test query 1
+        '401':
+          description: Unauthorized
         '403':
           description: Forbidden
     post:
       tags:
         - Instances
       summary: Adds a new instance with the properties provided in the body.
+      description: Requires 'CREATE_INSTANCES' user role.
       operationId: addInstance
       responses:
         '201':
@@ -61,6 +68,10 @@ paths:
                 id: 1
                 address: address.example.com
                 sourceQuery: test query 1
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
       requestBody:
         content:
           application/json:
@@ -77,6 +88,7 @@ paths:
       tags:
         - Instances
       summary: Gets an instance with the given `<id>`.
+      description: Requires 'READ_INSTANCES' user role.
       operationId: getInstance
       parameters:
         - name: id
@@ -95,12 +107,17 @@ paths:
                 id: 1
                 address: address.example.com
                 sourceQuery: test query 1
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
         '404':
           description: Not Found
     put:
       tags:
         - Instances
       summary: Updates the instance with given `<id>` with the values in the body.
+      description: Requires 'CHANGE_INSTANCES' user role.
       operationId: replaceInstance
       parameters:
         - name: id
@@ -111,6 +128,10 @@ paths:
       responses:
         '200':
           description: OK
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
         '404':
           description: Not Found
       requestBody:
@@ -141,3 +162,9 @@ components:
           description: Data selection query
           type: string
           minLength: 1
+
+  securitySchemes:
+    BearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
