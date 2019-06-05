@@ -40,10 +40,10 @@ There should now be an application running at [http://localhost:8080/](http://lo
 
 ### Package
 ```bash
-# create a war package
-mvn package
+# create a jar package
+mvn clean package
 ```
-There should now be a `.war`-file in `target/whereabouts-<version>.jar`.
+There should now be a `.jar`-file in `target/whereabouts-<version>.jar`.
 ```bash
 # run the packaged application
 java -jar target/whereabouts-<version>.jar

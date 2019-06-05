@@ -126,4 +126,17 @@
 		</plugins>
 	</build>
 
+	<distributionManagement>
+		<repository>
+			<id>nl.thehyve.nexus</id>
+			<name>The Hyve - Nexus repository</name>
+			<url>https://repo.thehyve.nl/content/repositories/releases/</url>
+		</repository>
+		<snapshotRepository>
+			<id>nl.thehyve.nexus</id>
+			<name>The Hyve - Nexus repository</name>
+			<url>https://repo.thehyve.nl/content/repositories/snapshots/</url>
+		</snapshotRepository>
+	</distributionManagement>
+
 </project>
