@@ -53,7 +53,7 @@ Make sure you have Maven installed.
 # run the application
 mvn spring-boot:run
 ```
-There should now be an application running at [http://localhost:8080/](http://localhost:8080/).
+There should now be an application running at [http://localhost:8086/](http://localhost:8086/).
 
 
 ### Package
