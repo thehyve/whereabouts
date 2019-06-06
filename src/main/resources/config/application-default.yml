@@ -2,7 +2,7 @@ spring:
     profiles:
         active: dev
     datasource:
-        platform: postgres
+        platform: postgresql
         driver-class-name: org.postgresql.Driver
         url: jdbc:postgresql://${db_host:localhost}:${db_port:5432}/${db_name:whereabouts}?currentSchema=public
         username: ${db_username:wa}
@@ -10,7 +10,7 @@ spring:
         hikari:
             jdbc-url: jdbc:postgresql://${db_host:localhost}:${db_port:5432}/${db_name:whereabouts}
 server:
-    port : 8085
+    port : 8086
 ---
 keycloak:
     bearer-only: true
