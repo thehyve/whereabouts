@@ -30,7 +30,7 @@ paths:
       tags:
         - Instances
       summary: Get all instances.
-      description: Requires 'READ_INSTANCES' user role.
+      description: Requires 'read-instances' user role.
       operationId: getInstances
       responses:
         '200':
@@ -55,7 +55,7 @@ paths:
       tags:
         - Instances
       summary: Adds a new instance with the properties provided in the body.
-      description: Requires 'CREATE_INSTANCES' user role.
+      description: Requires 'create-instances' user role.
       operationId: addInstance
       responses:
         '201':
@@ -88,7 +88,7 @@ paths:
       tags:
         - Instances
       summary: Gets an instance with the given `<id>`.
-      description: Requires 'READ_INSTANCES' user role.
+      description: Requires 'read-instances' user role.
       operationId: getInstance
       parameters:
         - name: id
@@ -117,7 +117,7 @@ paths:
       tags:
         - Instances
       summary: Updates the instance with given `<id>` with the values in the body.
-      description: Requires 'CHANGE_INSTANCES' user role.
+      description: Requires 'change-instances' user role.
       operationId: replaceInstance
       parameters:
         - name: id

@@ -35,7 +35,7 @@ public class InstanceController {
      * GET /instances : get all instances.
      *
      * @return the list of all instances,
-     *         or an exception (403) if user does not have a role 'READ_INSTANCES'
+     *         or an exception (403) if user does not have a role 'read-instances'
      */
     @GetMapping
     @PreAuthorize(READ_INSTANCES)
@@ -49,7 +49,7 @@ public class InstanceController {
      * @param id the id of the instance.
      * @return the instance with the id, if it exists;
      *         an exception (404) if does not exist
-     *         or (403) if user does not have a role 'READ_INSTANCES'
+     *         or (403) if user does not have a role 'read-instances'
      */
     @GetMapping("/{id}")
     @PreAuthorize(READ_INSTANCES)
@@ -63,7 +63,7 @@ public class InstanceController {
      * @param newInstance the properties of the new instance.
      * @return the added instance with the generated id, if the data is valid,
      *         an exception (400) if the data is not valid
-     *         or (403) if user does not have a role 'CREATE_INSTANCES'
+     *         or (403) if user does not have a role 'create-instances'
      */
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
@@ -81,7 +81,7 @@ public class InstanceController {
      * @return the updated instance, if it exists and the data is valid;
      *         an exception if the instance cannot be found (404)
      *         or the data is invalid (400),
-     *         or user does not have a role 'CHANGE_INSTANCES' (403)
+     *         or user does not have a role 'change-instances' (403)
      */
     @PutMapping("/{id}")
     @PreAuthorize(CHANGE_INSTANCES)

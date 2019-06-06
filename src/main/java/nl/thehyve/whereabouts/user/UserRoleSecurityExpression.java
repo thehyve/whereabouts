@@ -17,15 +17,15 @@ public final class UserRoleSecurityExpression {
     /**
      * Expression to control an access to GET operations on instances.
      */
-    public final static String READ_INSTANCES = "hasAuthority('READ_INSTANCES')";
+    public final static String READ_INSTANCES = "hasAuthority('read-instances')";
 
     /**
      * Controls access to POST operation on instances.
      */
-    public final static String CREATE_INSTANCES = "hasAuthority('CREATE_INSTANCES')";
+    public final static String CREATE_INSTANCES = "hasAuthority('create-instances')";
 
     /**
      * Controls access to PUT operation on instances.
      */
-    public final static String CHANGE_INSTANCES = "hasAuthority('CHANGE_INSTANCES')";
+    public final static String CHANGE_INSTANCES = "hasAuthority('change-instances')";
 }

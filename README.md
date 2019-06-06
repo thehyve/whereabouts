@@ -39,9 +39,9 @@ The following settings need to be configured before running the application.
 
 
 There are 3 Keycloak client roles that need to be added for users to enable the access to all endpoints:
-- READ_INSTANCES,
-- CREATE_INSTANCES,
-- CHANGE_INSTANCES;
+- read-instances,
+- create-instances,
+- change-instances;
 
 See [swagger documentation](/src/main/resources/public/swagger.yaml) for more details.
 
