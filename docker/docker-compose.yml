@@ -8,7 +8,7 @@ services:
       POSTGRES_PASSWORD: wa
       POSTGRES_DB: whereabouts
     volumes:
-      - db-data:/var/lib/postgresql/data
+      - whereabouts-db-data:/var/lib/postgresql/data
     networks:
       - whereabouts-db-network
   whereabouts:
@@ -30,8 +30,7 @@ services:
     networks:
       - whereabouts-db-network
 volumes:
-  db-data:
-
+  whereabouts-db-data:
 networks:
   whereabouts-db-network:
     driver: bridge
