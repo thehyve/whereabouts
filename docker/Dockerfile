@@ -2,9 +2,7 @@ FROM openjdk:8-jre-alpine
 
 ENV APP_PORT 8086
 ENV WHEREABOUTS_VERSION "0.0.1-SNAPSHOT"
-# to be removed and replaced with WHEREABOUTS_VERSION after first release
-ENV WHEREABOUTS_SNAPSHOT_VERSION "0.0.1-20190606.073652-5"
-ENV WHEREABOUTS_JAR_URL https://repo.thehyve.nl/content/repositories/snapshots/nl/thehyve/whereabouts/${WHEREABOUTS_VERSION}/whereabouts-${WHEREABOUTS_SNAPSHOT_VERSION}.jar
+ENV WHEREABOUTS_JAR_URL http://repo.thehyve.nl/service/local/artifact/maven/redirect?r=snapshots&g=nl.thehyve&a=whereabouts&v=${WHEREABOUTS_VERSION}&p=jar
 
 # non-overridable environment variables
 ENV APP_USR whereabouts_usr
@@ -20,10 +18,10 @@ USER root
 RUN adduser -h "${APP_USR_HOME}" -D ${APP_USR} && \
     sed -i 's/\r//' /entrypoint.sh && \
     chown "${APP_USR}" /entrypoint.sh && \
-    chmod u+x /entrypoint.sh
-
-# download the jar
-RUN wget "${WHEREABOUTS_JAR_URL}" -O "${APP_USR_HOME}/whereabouts-${WHEREABOUTS_VERSION}.jar"
+    chmod u+x /entrypoint.sh && \
+    # download the jar
+    apk add curl && \
+    curl -L "${WHEREABOUTS_JAR_URL}" -o "${APP_USR_HOME}/whereabouts-${WHEREABOUTS_VERSION}.jar"
 
 USER ${APP_USR}
 WORKDIR ${APP_USR_HOME}
