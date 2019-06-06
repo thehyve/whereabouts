@@ -7,6 +7,9 @@ jackson:
     write_dates_as_timestamps: false
     indent_output: true
 
+server:
+  port : 8086
+
 ---
 spring:
   datasource:
@@ -32,3 +35,7 @@ spring:
         implicit-strategy: org.springframework.boot.orm.jpa.hibernate.SpringImplicitNamingStrategy
   liquibase:
     enabled: true
+
+keycloak:
+  bearer-only: true
+  use-resource-role-mappings: true
