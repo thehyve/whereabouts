@@ -6,8 +6,8 @@
 package nl.thehyve.whereabouts.dto;
 
 import lombok.Data;
-import nl.thehyve.whereabouts.validation.Required;
 
+import javax.validation.constraints.NotBlank;
 import java.io.Serializable;
 
 /**
@@ -18,8 +18,8 @@ public class InstanceRepresentation implements Serializable {
 
     private Long id;
 
-    private @Required String address;
+    private @NotBlank String address;
 
-    private @Required String sourceQuery;
+    private @NotBlank String sourceQuery;
 
 }
