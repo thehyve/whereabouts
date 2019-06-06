@@ -24,6 +24,5 @@ exec java -jar -server \
         "-Djava.awt.headless=true" \
         "-Dmail.mime.decodeparameters=true" \
         "-Djava.security.egd=file:///dev/urandom" \
-        "-Dserver.port=${APP_PORT}" \
-        "-Dspring.config.location=${APP_CONFIG_FILE}" \
+        "-Dspring.config.location=classpath:/config/application.yml,${APP_CONFIG_FILE}" \
     "whereabouts-${WHEREABOUTS_VERSION}.jar"
