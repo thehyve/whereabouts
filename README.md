@@ -10,6 +10,8 @@ and how to connect to them (required for the data loading and slicing services).
 
 ## Run, test, deploy
 
+Run the application and its database using [docker](./docker/README.md) or follow the instruction below.
+
 ### Configure PostgreSQL database
 ```bash
 sudo -u postgres psql
