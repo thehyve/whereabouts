@@ -19,14 +19,15 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
+import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
 import static org.springframework.boot.test.context.SpringBootTest.WebEnvironment.MOCK;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest(webEnvironment = MOCK, classes = WhereaboutsApplication.class)
@@ -39,11 +40,13 @@ public class InstanceControllerIntegrationTest {
     @Autowired
     private InstanceRepository repository;
 
+
     @After
     public void cleanup() {
         repository.deleteAll();
     }
 
+    @WithMockUser(username="spring", authorities={"create-instances"})
     @Test
     public void givenNoInstances_whenPostInstance_thenStatus200() throws Exception {
 
@@ -60,6 +63,7 @@ public class InstanceControllerIntegrationTest {
         Assert.assertEquals(sizeAfterCreate, sizeBeforeCreate + 1);
     }
 
+    @WithMockUser(username="spring", authorities={"change-instances"})
     @Test
     public void givenInstances_whenPutInstance_thenStatus200() throws Exception {
 
@@ -80,6 +84,7 @@ public class InstanceControllerIntegrationTest {
         Assert.assertEquals(sizeAfterCreate, sizeBeforeCreate);
     }
 
+    @WithMockUser(username="spring", authorities={"change-instances"})
     @Test
     public void givenNonExistingInstance_whenPutInstance_thenStatus404() throws Exception {
         Instance instance = new Instance("test address", "test query");
@@ -91,6 +96,7 @@ public class InstanceControllerIntegrationTest {
                 .andExpect(status().isNotFound());
     }
 
+    @WithMockUser(username="spring", authorities={"read-instances"})
     @Test
     public void givenInstances_whenGetInstances_thenStatus200() throws Exception {
 
@@ -107,6 +113,7 @@ public class InstanceControllerIntegrationTest {
                 .andExpect(MockMvcResultMatchers.jsonPath("$[1].sourceQuery", Matchers.is("query 2")));
     }
 
+    @WithMockUser(username="spring", authorities={"read-instances"})
     @Test
     public void givenInstances_whenGetInstanceById_thenStatus200() throws Exception {
 
@@ -122,6 +129,7 @@ public class InstanceControllerIntegrationTest {
 
     }
 
+    @WithMockUser(username="spring", authorities={"read-instances"})
     @Test
     public void givenNonExistingInstance_whenGetInstanceById_thenStatus404() throws Exception {
         mvc.perform(get("/instances/-1")
@@ -129,6 +137,7 @@ public class InstanceControllerIntegrationTest {
                 .andExpect(status().isNotFound());
     }
 
+    @WithMockUser(username="spring", authorities={"create-instances"})
     @Test
     public void givenInvalidInstance_whenPostInstance_thenStatus400() throws Exception {
         ObjectMapper mapper = new ObjectMapper();
@@ -141,6 +150,7 @@ public class InstanceControllerIntegrationTest {
                 .andExpect(status().isBadRequest());
     }
 
+    @WithMockUser(username="spring", authorities={"create-instances"})
     @Test
     public void givenValidInstance_whenPostInstance_thenStatus400() throws Exception {
         ObjectMapper mapper = new ObjectMapper();
@@ -151,6 +161,46 @@ public class InstanceControllerIntegrationTest {
                 .content(mapper.writeValueAsString(instance))
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isCreated());
+    }
+
+    @WithMockUser(username="spring", authorities={})
+    @Test
+    public void givenNoRole_whenPostInstance_thenStatus403() throws Exception {
+
+        Instance instance = new Instance("test address", "test query");
+        InstanceRepresentation instanceRepresentation = InstanceMapper.MAPPER.instanceToInstanceRepresentation(instance);
+
+        mvc.perform(post("/instances")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(TestUtil.convertObjectToJsonBytes(instanceRepresentation)))
+                .andExpect(status().isForbidden());
+
+        int sizeAfterCreate = repository.findAll().size();
+        Assert.assertEquals(sizeAfterCreate, 0);
+    }
+
+    @WithMockUser(username="spring", authorities={"create-instances"})
+    @Test
+    public void givenInvalidRole_whenGetInstance_thenStatus403() throws Exception {
+
+        createTestInstance("address 1", "query 1");
+
+        mvc.perform(get("/instances")
+                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isForbidden());
+    }
+
+    @WithMockUser(username="spring", authorities={})
+    @Test
+    public void givenNoRole_whenPutInstance_thenStatus403() throws Exception {
+
+        Instance instance = createTestInstance("test address", "test query");
+        InstanceRepresentation instanceRepresentation = InstanceMapper.MAPPER.instanceToInstanceRepresentation(instance);
+
+        mvc.perform(put("/instances/" + instance.getId())
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(TestUtil.convertObjectToJsonBytes(instanceRepresentation)))
+                .andExpect(status().isForbidden());
     }
 
     private Instance createTestInstance(String address, String sourceQuery) {

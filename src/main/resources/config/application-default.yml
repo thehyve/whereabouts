@@ -2,10 +2,19 @@ spring:
     profiles:
         active: dev
     datasource:
-        platform: mysql
+        platform: postgresql
         driver-class-name: org.postgresql.Driver
         url: jdbc:postgresql://${db_host:localhost}:${db_port:5432}/${db_name:whereabouts}?currentSchema=public
         username: ${db_username:wa}
         password: ${db_password:wa}
         hikari:
             jdbc-url: jdbc:postgresql://${db_host:localhost}:${db_port:5432}/${db_name:whereabouts}
+server:
+    port : 8086
+---
+keycloak:
+    bearer-only: true
+    use-resource-role-mappings: true
+    auth-server-url: http://localhost:8080/auth
+    realm: dev
+    resource: whereabouts
