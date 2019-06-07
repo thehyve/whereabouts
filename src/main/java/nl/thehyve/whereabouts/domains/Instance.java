@@ -5,10 +5,7 @@
 
 package nl.thehyve.whereabouts.domains;
 
-import lombok.Data;
-import lombok.NoArgsConstructor;
-import lombok.NonNull;
-import lombok.RequiredArgsConstructor;
+import lombok.*;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -16,11 +13,12 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
 @Data
+@EqualsAndHashCode(onlyExplicitlyIncluded = true)
 @Entity
 @NoArgsConstructor
 @RequiredArgsConstructor
 public class Instance {
-    private @Id @GeneratedValue(strategy = GenerationType.IDENTITY) Long id;
+    private @Id @GeneratedValue(strategy = GenerationType.IDENTITY) @EqualsAndHashCode.Include Long id;
     private @NonNull String address;
     private @NonNull String sourceQuery;
 }
