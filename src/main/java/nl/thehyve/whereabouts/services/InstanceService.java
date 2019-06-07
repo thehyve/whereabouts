@@ -48,7 +48,7 @@ public class InstanceService {
         Instance instance = instanceRepository.findById(instanceRepresentation.getId())
                 .orElseThrow(() -> new InstanceNotFoundException(instanceRepresentation.getId()));
 
-        instance = InstanceMapper.MAPPER.updateInstanceFromOrganisationRepresentation(
+        instance = InstanceMapper.MAPPER.updateInstanceFromInstanceRepresentation(
                 instanceRepresentation, instance
         );
 

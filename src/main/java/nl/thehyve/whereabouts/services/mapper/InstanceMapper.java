@@ -22,7 +22,7 @@ public interface InstanceMapper {
     Instance createInstanceFromInstanceRepresentation(InstanceRepresentation instanceRepresentation);
 
     @Mapping(target = "id", ignore = true)
-    Instance updateInstanceFromOrganisationRepresentation(
+    Instance updateInstanceFromInstanceRepresentation(
             InstanceRepresentation instanceRepresentation,
             @MappingTarget Instance instance
     );
