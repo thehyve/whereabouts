@@ -10,11 +10,10 @@ import nl.thehyve.whereabouts.dto.InstanceRepresentation;
 import nl.thehyve.whereabouts.exceptions.InstanceNotFoundException;
 import nl.thehyve.whereabouts.repositories.InstanceRepository;
 import nl.thehyve.whereabouts.services.mapper.InstanceMapper;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
-import java.util.List;
-import java.util.stream.Collectors;
 
 @Service
 @Transactional
@@ -26,10 +25,9 @@ public class InstanceService {
         this.instanceRepository = instanceRepository;
     }
 
-    public List<InstanceRepresentation> findAll() {
-        return instanceRepository.findAll().stream()
-                .map(InstanceMapper.MAPPER::instanceToInstanceRepresentation)
-                .collect(Collectors.toList());
+    public Page<InstanceRepresentation> getPage(Pageable pageable) {
+        return instanceRepository.findAll(pageable)
+            .map(InstanceMapper.MAPPER::instanceToInstanceRepresentation);
     }
 
     public InstanceRepresentation findById(Long id) {

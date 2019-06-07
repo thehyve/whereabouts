@@ -6,7 +6,12 @@
 package nl.thehyve.whereabouts.repositories;
 
 import nl.thehyve.whereabouts.domains.Instance;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface InstanceRepository extends JpaRepository<Instance, Long> {
+
+    Page<Instance> findAll(Pageable pageable);
+
 }

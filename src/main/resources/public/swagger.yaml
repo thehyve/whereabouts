@@ -29,9 +29,29 @@ paths:
     get:
       tags:
         - Instances
-      summary: Get all instances.
+      summary: Get instances.
       description: Requires 'read-instances' user role.
       operationId: getInstances
+      parameters:
+        - name: size
+          description: Page size.
+          in: query
+          schema:
+            type: integer
+        - name: page
+          description: Page number, zero based.
+          in: query
+          schema:
+            type: integer
+        - name: sort
+          description: |
+            Sort specification. Format: `{property}[,{asc|desc}]`.
+            Example: `address,asc`.
+          in: query
+          schema:
+            type: array
+            items:
+              type: string
       responses:
         '200':
           description: Success

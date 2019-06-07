@@ -6,7 +6,12 @@
 package nl.thehyve.whereabouts.controllers;
 
 import nl.thehyve.whereabouts.dto.InstanceRepresentation;
+import nl.thehyve.whereabouts.exceptions.InvalidRequest;
 import nl.thehyve.whereabouts.services.InstanceService;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -14,7 +19,9 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
-import java.util.List;
+import java.lang.reflect.Field;
+import java.util.*;
+import java.util.stream.Collectors;
 
 import static nl.thehyve.whereabouts.user.UserRoleSecurityExpression.*;
 
@@ -30,17 +37,46 @@ public class InstanceController {
         this.instanceService = instanceService;
     }
 
+    private Set<String> sortFields = Arrays.stream(InstanceRepresentation.class.getDeclaredFields())
+        .map(Field::getName)
+        .collect(Collectors.toSet());
+
+    private void checkSortFields(Pageable pageable) {
+        Optional<String> invalidSortField = pageable.getSort().stream()
+            .map(Sort.Order::getProperty)
+            .filter(property -> !sortFields.contains(property))
+            .findAny();
+        if (invalidSortField.isPresent()) {
+            throw new InvalidRequest(
+                "Invalid sort field: '" + invalidSortField.get() + "'. " +
+                    "Supported fields: " + String.join(", ", sortFields) + ".");
+        }
+    }
 
     /**
-     * GET /instances : get all instances.
+     * GET /instances?page={page}&size={size}&sort={sort} : get all instances.
      *
+     * Example:
+     *   GET /instances?page=1&size=20&sort=address,asc&sort=id,desc
+     *
+     *   This returns the second page, with page size 20, with the instances first
+     *   ordered by address (in ascending order), then by id (in descending order).
+     *
+     * @param pageable pagination properties:
+     *                 - size: the page size
+     *                 - page: the page to display, zero-based
+     *                 - sort: sort criteria in the form '{property},{asc|desc}'
      * @return the list of all instances,
      *         or an exception (403) if user does not have a role 'read-instances'
      */
     @GetMapping
     @PreAuthorize(READ_INSTANCES)
-    public List<InstanceRepresentation> getInstances() {
-        return instanceService.findAll();
+    public ResponseEntity<List<InstanceRepresentation>> getInstances(Pageable pageable) {
+        checkSortFields(pageable);
+        Page<InstanceRepresentation> page = instanceService.getPage(pageable);
+        HttpHeaders headers = new HttpHeaders();
+        headers.add("X-Total-Count", "" + Long.toString(page.getTotalElements()));
+        return new ResponseEntity<>(page.getContent(), headers, HttpStatus.OK);
     }
 
     /**
