@@ -2,7 +2,7 @@ FROM openjdk:8-jre-alpine
 
 ENV APP_PORT 8086
 ENV WHEREABOUTS_VERSION "0.0.1-SNAPSHOT"
-ENV WHEREABOUTS_JAR_URL http://repo.thehyve.nl/service/local/artifact/maven/redirect?r=snapshots&g=nl.thehyve&a=whereabouts&v=${WHEREABOUTS_VERSION}&p=jar
+ENV WHEREABOUTS_JAR_URL https://repo.thehyve.nl/service/local/artifact/maven/redirect?r=snapshots&g=nl.thehyve&a=whereabouts&v=${WHEREABOUTS_VERSION}&p=jar
 
 # non-overridable environment variables
 ENV APP_USR whereabouts_usr
