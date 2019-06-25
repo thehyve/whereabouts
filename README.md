@@ -1,7 +1,8 @@
 # whereabouts
 
-[![Build Status](https://travis-ci.org/thehyve/whereabouts.svg?branch=master)](https://travis-ci.org/thehyve/whereabouts/branches)
+[![Build status](https://travis-ci.org/thehyve/whereabouts.svg?branch=master)](https://travis-ci.org/thehyve/whereabouts/branches)
 [![codecov](https://codecov.io/gh/thehyve/whereabouts/branch/master/graph/badge.svg)](https://codecov.io/gh/thehyve/whereabouts)
+[![Known vulnerabilities](https://snyk.io//test/github/thehyve/whereabouts/badge.svg?targetFile=pom.xml)](https://snyk.io//test/github/thehyve/whereabouts?targetFile=pom.xml)
 
 Data warehouse Inventory Management System that maintains a catalogue of data warehouse instances, 
 with information about how they were created (to enable restoring a similar instance) 
