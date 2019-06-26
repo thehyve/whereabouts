@@ -2,6 +2,7 @@
 
 [![Build status](https://travis-ci.org/thehyve/whereabouts.svg?branch=master)](https://travis-ci.org/thehyve/whereabouts/branches)
 [![codecov](https://codecov.io/gh/thehyve/whereabouts/branch/master/graph/badge.svg)](https://codecov.io/gh/thehyve/whereabouts)
+[![codebeat](https://codebeat.co/badges/4faa84fe-64ec-4cb5-b3c1-3b5cb1b66ee9)](https://codebeat.co/projects/github-com-thehyve-whereabouts-master)
 [![Known vulnerabilities](https://snyk.io//test/github/thehyve/whereabouts/badge.svg?targetFile=pom.xml)](https://snyk.io//test/github/thehyve/whereabouts?targetFile=pom.xml)
 
 Data warehouse Inventory Management System that maintains a catalogue of data warehouse instances, 
