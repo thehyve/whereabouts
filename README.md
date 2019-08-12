@@ -61,6 +61,9 @@ There should now be an application running at [http://localhost:8086/](http://lo
 
 
 ### Package
+
+The package depends on Java 11.
+
 ```bash
 # create a jar package
 mvn clean package
