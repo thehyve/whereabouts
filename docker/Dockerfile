@@ -1,4 +1,4 @@
-FROM openjdk:8-jre-alpine
+FROM openjdk:11-jre
 
 ENV APP_PORT 8086
 ENV WHEREABOUTS_VERSION "0.0.1-SNAPSHOT"
@@ -15,12 +15,11 @@ EXPOSE ${APP_PORT}
 
 USER root
 
-RUN adduser -h "${APP_USR_HOME}" -D ${APP_USR} && \
+RUN useradd -m -d "${APP_USR_HOME}" -U ${APP_USR} && \
     sed -i 's/\r//' /entrypoint.sh && \
     chown "${APP_USR}" /entrypoint.sh && \
     chmod u+x /entrypoint.sh && \
     # download the jar
-    apk add curl && \
     curl -L "${WHEREABOUTS_JAR_URL}" -o "${APP_USR_HOME}/whereabouts-${WHEREABOUTS_VERSION}.jar"
 
 USER ${APP_USR}
