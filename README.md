@@ -83,8 +83,14 @@ Run all tests. The test will use the configuration from `./src/test/resource/app
 mvn test
 ```
 
-License
--------
+
+## Acknowledgement
+
+This project was funded by the German Ministry of Education and Research (BMBF) as part of the project
+DIFUTURE - Data Integration for Future Medicine within the German Medical Informatics Initiative (grant no. 01ZZ1804D).
+
+
+## License
 
 Copyright (c) 2019 The Hyve B.V.
 
