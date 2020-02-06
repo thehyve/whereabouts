@@ -22,3 +22,4 @@ deploy:
 # - `travis env set DOCKER_PASSWORD ...` (create a new access token for this purpose)
 after_deploy:
   - travis_retry ./.travis/docker_release.sh
+  - ./.travis/notify.sh
