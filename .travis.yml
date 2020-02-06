@@ -3,6 +3,22 @@ language: java
 jdk: openjdk11
 
 script:
-  -  mvn clean install
+  - mvn clean install
+
 after_success:
   - bash <(curl -s https://codecov.io/bash)
+
+# For deployment to Nexus, configure the `NEXUS_USERNAME` and `NEXUS_PASSWORD` variables:
+# - `travis env set NEXUS_USERNAME ...`
+# - `travis env set NEXUS_PASSWORD ...`
+deploy:
+  provider: script
+  script: "cp .travis/settings.xml $HOME/.m2/settings.xml && mvn -DskipTests deploy"
+  on:
+    branch: master
+
+# For deployment to Docker Hub, configure the `DOCKER_USERNAME` and `DOCKER_PASSWORD` variables:
+# - `travis env set DOCKER_USERNAME ...`
+# - `travis env set DOCKER_PASSWORD ...` (create a new access token for this purpose)
+after_deploy:
+  - travis_retry ./.travis/docker_release.sh

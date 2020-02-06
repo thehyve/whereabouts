@@ -25,4 +25,4 @@ exec java -jar -server \
         "-Dmail.mime.decodeparameters=true" \
         "-Djava.security.egd=file:///dev/urandom" \
         "-Dspring.config.location=classpath:/config/application.yml,${APP_CONFIG_FILE}" \
-    "whereabouts-${WHEREABOUTS_VERSION}.jar"
+    "whereabouts-${APP_VERSION}.jar"
