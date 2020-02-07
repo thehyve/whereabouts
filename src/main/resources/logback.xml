@@ -17,6 +17,7 @@
     <logger name="org.springframework.data.repository" level="WARN"/>
     <logger name="org.springframework.jmx" level="WARN"/>
     <logger name="org.springframework.orm.jpa" level="WARN"/>
+    <logger name="org.springframework.security.web" level="WARN"/>
 
     <root level="INFO">
         <appender-ref ref="CONSOLE"/>
